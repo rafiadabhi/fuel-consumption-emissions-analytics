@@ -1,0 +1,38 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Raw source data is not published
+data/raw/*
+!data/raw/.gitkeep
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Notebook and editor metadata
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local database and temporary files
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.tmp
+~$*
+
+# Generated evidence is intentionally NOT ignored:
+# data/processed/, data/outputs/, models/, dashboard/screenshots/
+# Run the pipeline first, review the files, then commit them as project evidence.
