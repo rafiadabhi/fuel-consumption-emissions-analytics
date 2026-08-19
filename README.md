@@ -1,72 +1,173 @@
 # Fuel Consumption & Emissions Analytics
 
-An end-to-end portfolio project for analyzing Canadian vehicle fuel-consumption
-ratings and modeling rated tailpipe CO₂ emissions with **Python, MySQL, Streamlit,
-and Plotly**.
+Built this project to analyze Canadian vehicle fuel-consumption ratings and turn them into practical fuel-efficiency and emissions-benchmarking insights. Leveraged ChatGPT (SOL 5.6) as an AI co-pilot to accelerate the entire development lifecycle from data exploration and SQL query optimization in MySQL, to feature engineering and machine learning modeling, all the way to building an interactive Streamlit dashboard with Plotly visualizations. The project combines Python, MySQL, SQL, machine learning, Streamlit, and Plotly into one fully reproducible, end-to-end workflow.
 
-I built this project to practice a complete analytics workflow: auditing a raw
-dataset, creating a reproducible cleaning pipeline, designing a relational reporting
-layer, comparing leakage-aware regression models, and presenting the findings in an
-interactive dashboard.
+**Author:** Rafi Adabhi Sunarya  
+**Project title:** Fuel Consumption & Emissions Analytics 
+**Dataset:** Government of Canada Fuel Consumption Ratings, model years 1995–2023
 
-> This repository starts as a source-only package. The raw CSV, processed data,
-> model artifact, metrics, and dashboard screenshots are created or added locally
-> after the project is run. The included dashboard mockups are design references,
-> not generated project results.
+> This project estimates published rated tailpipe CO₂ emissions. It does not claim
+> to estimate real-world fuel use, lifecycle emissions, sales-weighted fleet
+> outcomes, or achieved emissions savings.
 
-## Business Questions
+## What I built
 
-- How have rated fuel consumption and tailpipe CO₂ changed across model years?
-- Which vehicle classes, manufacturers, and fuel types have the highest averages?
-- Which configurations sit furthest above their class-year peer benchmark?
-- How accurately can rated CO₂ be estimated before measured fuel-consumption fields are used?
-- In which test-period segments does the selected model produce the largest errors?
+- Cleaned and validated 27,001 raw vehicle-rating rows with Python, removing three
+  exact duplicates and producing 26,998 standardized records.
+- Standardized 29 model years of vehicle-class, fuel-type, and transmission-family
+  labels, then created class-year CO₂ benchmarks and peer-gap features.
+- Loaded the clean vehicle ratings and modeling outputs into MySQL for persistent
+  analysis and reporting views.
+- Used SQL aggregations, window functions, indexes, and reusable views for trend,
+  segment, manufacturer, and class-year peer analysis.
+- Developed a leakage-aware temporal CO₂ regression workflow with a tuned Random
+  Forest selected on the 2020–2021 validation period.
+- Created a MySQL-connected Streamlit and Plotly dashboard for executive trends,
+  segment benchmarking, model diagnostics, and peer-gap screening.
 
-## Dataset
+## Dashboard showcase
 
-The pipeline expects the following file:
+The dashboard source is included in [`dashboard/`](dashboard/). Its four pages
+answer different business questions:
 
-```text
-data/raw/MY1995-2023-Fuel-Consumption-Ratings.csv
-```
+1. **Executive Overview** — How have rated CO₂ emissions and fuel use changed
+   across model years?
+2. **Segment Benchmark** — Which vehicle classes, manufacturers, and fuel types
+   have the highest averages and peer gaps?
+3. **Model Performance** — How accurately does the selected model estimate rated
+   CO₂ on the untouched test period?
+4. **Opportunity Scenario** — Which configurations sit furthest above their
+   class-year peer benchmark under an adjustable distance scenario?
 
-The supplied source contains 27,001 vehicle-rating rows and 15 columns covering
-model years 1995–2023. Three exact duplicates are removed during cleaning, leaving
-26,998 standardized records. The raw dataset is intentionally excluded from GitHub.
+### Executive Overview
 
-See [`docs/DATA_AUDIT.md`](docs/DATA_AUDIT.md) for the source schema, missing-value
-assessment, duplicate handling, outlier policy, and analytical limitations.
+![Executive Overview](dashboard/mockups/01_executive_overview.png)
 
-## Project Workflow
+### Segment Benchmark
+
+![Segment Benchmark](dashboard/mockups/02_segment_benchmark.png)
+
+### Model Performance
+
+![Model Performance](dashboard/mockups/03_model_performance.png)
+
+### Opportunity Scenario
+
+![Opportunity Scenario](dashboard/mockups/04_opportunity_scenario.png)
+
+The dashboard construction details are documented in:
+
+- [`STREAMLIT_DASHBOARD_GUIDE.md`](dashboard/STREAMLIT_DASHBOARD_GUIDE.md) — page,
+  filter, KPI, chart, and screenshot guidance.
+- [`MODEL_CARD.md`](docs/MODEL_CARD.md) — prediction use case, leakage controls,
+  validation design, and limitations.
+
+## End-to-end workflow
 
 ```mermaid
-flowchart TD
-    A[Raw vehicle ratings] --> B[Python audit and cleaning]
-    B --> C[MySQL analytical tables]
-    C --> D[Leakage-aware model comparison]
-    D --> E[MySQL reporting views]
-    E --> F[Streamlit and Plotly dashboard]
-    D --> G[Metrics and model evidence]
+flowchart LR
+    A["Canadian vehicle-rating CSV"] --> B["Python cleaning and validation"]
+    B --> C["Clean vehicle ratings"]
+    C --> D["MySQL analytical tables"]
+    D --> E["Leakage-aware Python modeling"]
+    E --> F["Model results in MySQL"]
+    F --> G["MySQL reporting views"]
+    G --> H["Streamlit and Plotly dashboard"]
+    G --> I["Reviewable result evidence"]
 ```
 
-## Repository Structure
+MySQL is a required part of the workflow after cleaning. The Streamlit dashboard
+queries MySQL reporting views directly; it does not fall back to a local CSV.
+
+## Dataset and cleaning results
+
+The source file contains Canadian fuel-consumption ratings from model years 1995 to
+2023. I applied the following cleaning rules:
+
+- removed three exact duplicate records;
+- retained only records with valid year, engine, cylinder, fuel, and rated CO₂
+  values;
+- standardized vehicle classes, fuel types, and transmission families;
+- retained the supplied ratings as published data rather than imputing target
+  emissions;
+- calculated class-year median and P25 CO₂ benchmarks for peer comparison.
+
+| Metric | Result |
+| --- | ---: |
+| Raw vehicle-rating rows | 27,001 |
+| Exact duplicates removed | 3 |
+| Clean vehicle ratings | 26,998 |
+| Model years | 29 |
+| Coverage | 1995–2023 |
+| Untouched test records | 1,758 |
+| Regression target | Rated tailpipe CO₂ (g/km) |
+
+The complete schema, audit checks, duplicate handling, and analytical limitations
+are documented in [`docs/DATA_AUDIT.md`](docs/DATA_AUDIT.md).
+
+## Modeling approach
+
+### Leakage-aware CO₂ prediction
+
+I used a temporal setup instead of a random split so that later vehicle ratings do
+not leak into model selection:
+
+| Component | Definition |
+| --- | --- |
+| Training period | 1995–2019, 23,295 records |
+| Validation period | 2020–2021, 1,945 records |
+| Untouched test period | 2022–2023, 1,758 records |
+| Selection rule | Lowest validation MAE; RMSE used as tie-breaker |
+| Selected model | Tuned Random Forest |
+
+The primary candidates were a median baseline, Ridge Regression, Histogram Gradient
+Boosting, and a tuned Random Forest. The selected model was refit on the 1995–2021
+development period and evaluated once on the untouched 2022–2023 test set.
+
+| Test metric | Result |
+| --- | ---: |
+| MAE | 11.30 g/km |
+| RMSE | 18.28 g/km |
+| MAPE | 4.33% |
+| R² | 0.920 |
+| P90 absolute error | 26.51 g/km |
+
+Measured city, highway, and combined fuel-consumption fields; combined MPG;
+ratings; and target-derived class-year benchmarks are excluded from the primary
+model. They are too close to the target for the intended early-specification use
+case and would create a circular result.
+
+The measurement-rich diagnostic model is retained only to show why those fields are
+not eligible for selection. Its near-perfect performance is not reported as the
+project's primary result.
+
+## Technology responsibilities
+
+| Tool | How I used it |
+| --- | --- |
+| Python | CSV ingestion, cleaning, validation, feature preparation, model comparison, evaluation, and export |
+| MySQL | Persistent vehicle, model-output, and reporting layer |
+| SQL | Constraints, indexes, aggregations, window functions, class-year benchmarks, and dashboard views |
+| Streamlit + Plotly | Four-page interactive dashboard for trends, benchmarking, diagnostics, and scenario screening |
+
+## Repository structure
 
 ```text
 fuel-consumption-emissions-analytics/
 ├── .streamlit/
-│   └── config.toml
+│   └── config.toml             # tracked light dashboard theme
 ├── dashboard/
 │   ├── app.py
 │   ├── data_access.py
-│   ├── STREAMLIT_DASHBOARD_GUIDE.md
 │   ├── mockups/
-│   └── screenshots/
+│   ├── screenshots/            # add reviewed screenshots after running
+│   └── STREAMLIT_DASHBOARD_GUIDE.md
 ├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── outputs/
+│   ├── raw/                    # add the CSV locally
+│   ├── processed/              # generated by Python
+│   └── outputs/                # MySQL result evidence generated here
 ├── docs/
-├── models/
+├── models/                     # generated selected model artifact
 ├── sql/
 │   ├── 01_schema.sql
 │   ├── 02_reporting_views.sql
@@ -77,209 +178,148 @@ fuel-consumption-emissions-analytics/
 │   ├── 03_load_mysql.py
 │   ├── 04_build_dashboard_views.py
 │   ├── 05_export_results.py
-│   └── 06_validate_outputs.py
+│   ├── 06_validate_outputs.py
+│   ├── config.py
+│   └── db.py
 ├── .env.example
 ├── .gitignore
 ├── requirements.txt
 └── run_pipeline.py
 ```
 
-## Tools
+The numbered Python modules are the execution order. This source-only package does
+not include the raw CSV, credentials, generated outputs, model binary, or dashboard
+screenshots. After a successful run, the processed outputs, selected model, and
+reviewed screenshots are intended to be committed as portfolio evidence.
 
-- **Python:** pandas, NumPy, scikit-learn, joblib
-- **Database:** MySQL 8.0+, SQLAlchemy, PyMySQL
-- **Dashboard:** Streamlit and Plotly
-- **Validation:** automated file, model-reproduction, table, and view checks
+## Run the project locally
 
-I selected Streamlit because it keeps the dashboard in Python, connects cleanly to
-the MySQL reporting layer, and makes the project straightforward to reproduce.
+### 1. Clone and create the environment
 
-## Setup
+```powershell
+git clone https://github.com/<your-username>/fuel-consumption-emissions-analytics.git
+cd fuel-consumption-emissions-analytics
 
-### 1. Create a virtual environment
-
-```bash
-python -m venv .venv
-```
-
-Activate it:
-
-```bash
-# Windows PowerShell
-.venv\Scripts\Activate.ps1
-
-# macOS / Linux
-source .venv/bin/activate
-```
-
-### 2. Install dependencies
-
-```bash
+py -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 3. Configure MySQL
+### 2. Add the raw CSV
 
-Make sure MySQL 8.0 or newer is running. Copy the environment template:
-
-```bash
-# Windows PowerShell
-Copy-Item .env.example .env
-
-# macOS / Linux
-cp .env.example .env
-```
-
-Update `.env` with your local credentials:
-
-```env
-MYSQL_HOST=localhost
-MYSQL_PORT=3306
-MYSQL_DATABASE=fuel_emissions_db
-MYSQL_USER=root
-MYSQL_PASSWORD=YOUR_PASSWORD
-```
-
-The configured account must be able to create the database and its tables.
-
-### 4. Add the raw CSV
-
-Place the source file at:
+Download the Canadian Fuel Consumption Ratings CSV and save it as:
 
 ```text
 data/raw/MY1995-2023-Fuel-Consumption-Ratings.csv
 ```
 
-Do not rename the file unless you also update `RAW_FILE` in `src/config.py`.
+The raw source is excluded from GitHub. Do not rename it unless you also update
+`RAW_FILE` in `src/config.py`.
 
-## Run the Complete Pipeline
+### 3. Configure MySQL
 
-From the project root:
+Create a local `.env` file from the template:
 
-```bash
+```powershell
+Copy-Item .env.example .env
+```
+
+Set the local MySQL credentials in `.env`:
+
+```dotenv
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_DATABASE=fuel_emissions_db
+MYSQL_USER=root
+MYSQL_PASSWORD=YOUR_ACTUAL_MYSQL_PASSWORD
+```
+
+The configured MySQL account needs permission to create a database and tables. The
+pipeline creates `fuel_emissions_db` when absent, then rebuilds only this project's
+tables and views; it does not modify other databases.
+
+### 4. Run the complete pipeline
+
+```powershell
 python run_pipeline.py
 ```
 
-The command runs six stages in order:
+The script runs these six stages:
 
-1. audit and clean the raw CSV;
-2. create and load the MySQL schema;
-3. train, select, and evaluate regression models;
-4. create MySQL reporting views;
-5. export compact result evidence;
-6. validate generated files, model reproduction, tables, and views.
+```text
+01_audit_clean
+03_load_mysql
+02_train_models
+04_build_dashboard_views
+05_export_results
+06_validate_outputs
+```
 
-A successful run ends with a validation report whose status is `PASS`.
+After a successful run, validation writes `data/outputs/validation_report.json`
+with `"status": "PASS"`. The generated result evidence is exported from MySQL to
+`data/outputs/`, and the selected estimator is saved as:
 
-## Launch the Dashboard
+```text
+models/selected_co2_model.joblib
+```
 
-```bash
+### 5. Start the dashboard
+
+```powershell
 streamlit run dashboard/app.py
 ```
 
-Run that command from the project root so Streamlit loads the pinned light theme
-from `.streamlit/config.toml`. If the dashboard was already open before a theme or
-source update, stop it with `Ctrl+C` and start it again instead of only refreshing
-the browser tab.
+Run the command from the project root so Streamlit loads the tracked light theme in
+`.streamlit/config.toml`. If you update dashboard source or theme files, stop the
+running process with `Ctrl+C` and start it again instead of only refreshing the
+browser tab.
 
-The dashboard queries MySQL directly and contains four pages:
+## Useful MySQL validation
 
-- **Executive Overview:** four KPIs plus CO₂ trend, fuel mix, vehicle-class, and engine-band charts;
-- **Segment Benchmark:** fuel-versus-CO₂ scatter, peer-gap bars, manufacturer ranking, and class mix;
-- **Model Performance:** actual-versus-predicted values, validation MAE, feature importance, and segment errors;
-- **Opportunity Scenario:** largest peer gaps, opportunity mix, scenario sensitivity, and gap distribution.
+After the pipeline loads the database, I use this query in MySQL Workbench to
+verify the main vehicle table:
 
-The scenario page is a screening benchmark, not a claim of achieved emissions savings.
+```sql
+SELECT
+    COUNT(*) AS vehicle_records,
+    COUNT(DISTINCT vehicle_id) AS unique_vehicle_ids,
+    MIN(model_year) AS first_model_year,
+    MAX(model_year) AS latest_model_year,
+    AVG(co2_emissions_g_km) AS average_rated_co2_g_km
+FROM vehicle_ratings;
+```
 
-## Dashboard Design Preview
+The portfolio analysis queries are in
+[`sql/03_business_analysis.sql`](sql/03_business_analysis.sql). They cover yearly
+emissions trends, vehicle-class benchmarks, manufacturer comparisons, class-year
+peer gaps, and test-period model diagnostics.
 
-These approved mockups document the intended layout and visual hierarchy. The
-numbers shown in them are only layout samples; after the pipeline is run, the
-Streamlit dashboard reads the actual values from MySQL.
+## GitHub data policy
 
-### Executive Overview
+I keep the repository reproducible without committing credentials or the raw source
+file:
 
-![Executive Overview dashboard design](dashboard/mockups/01_executive_overview.png)
+- tracked after review: source code, SQL, README, dashboard source, theme,
+  mockups, documentation, processed results, model artifact, and dashboard
+  screenshots;
+- ignored: `.env`, virtual environments, raw CSV, caches, temporary files, and
+  local database files.
 
-### Segment Benchmark
+The `.gitignore` deliberately keeps `data/processed/`, `data/outputs/`, `models/`,
+and `dashboard/screenshots/` visible to Git after the pipeline has generated and I
+have reviewed them.
 
-![Segment Benchmark dashboard design](dashboard/mockups/02_segment_benchmark.png)
+## Limitations
 
-### Model Performance
-
-![Model Performance dashboard design](dashboard/mockups/03_model_performance.png)
-
-### Opportunity Scenario
-
-![Opportunity Scenario dashboard design](dashboard/mockups/04_opportunity_scenario.png)
-
-## Modeling Approach
-
-The target is published rated tailpipe CO₂ in grams per kilometre. To test temporal
-generalization, model years are split as follows:
-
-| Split | Model years | Purpose |
-|---|---:|---|
-| Train | 1995–2019 | candidate fitting and Random Forest tuning |
-| Validation | 2020–2021 | model selection by MAE, with RMSE as tie-breaker |
-| Test | 2022–2023 | final untouched temporal evaluation |
-
-The primary candidates are a median baseline, Ridge Regression, Histogram Gradient
-Boosting, and a tuned Random Forest. The final estimator is serialized only after the
-pipeline selects it from validation results.
-
-Measured city, highway, and combined fuel consumption, combined MPG, ratings, and
-target-derived peer fields are excluded from the primary model. Those fields are
-too close to the target for the intended early-specification use case and would
-create a circular result.
-
-## Generated Evidence
-
-After a successful run, review and commit these generated artifacts:
-
-- `data/processed/vehicle_ratings_clean.csv`
-- `data/outputs/data_audit_report.json`
-- `data/outputs/model_metadata.json`
-- `data/outputs/model_metrics.csv`
-- `data/outputs/model_predictions.csv`
-- `data/outputs/feature_importance.csv`
-- `data/outputs/dashboard_kpis.csv`
-- `data/outputs/validation_report.json`
-- `models/selected_co2_model.joblib`
-- `dashboard/screenshots/*.png` after capturing the running dashboard
-
-The `.gitignore` excludes raw data, credentials, virtual environments, and caches.
-Processed results, model artifacts, and screenshots are deliberately not ignored so
-they can serve as reproducible evidence after I have reviewed the run.
-
-## Result Interpretation
-
-The generated metrics should be read from `data/outputs/model_metrics.csv` and
-`data/outputs/model_metadata.json`. I report MAE as the primary metric because its
-unit is directly interpretable in g/km, with RMSE, MAPE, R², mean error, and P90
-absolute error providing additional context.
-
-Feature importance is predictive rather than causal. Manufacturer effects may
-reflect product mix, regulation, and historical coverage rather than engineering quality.
-
-## Scope and Limitations
-
-This project supports descriptive portfolio analysis, class-year peer screening,
-and temporal evaluation of rated CO₂ predictions. It does not support:
-
-- sales-weighted or fleet-weighted market conclusions;
-- real-world fuel use or lifecycle-emissions claims;
-- guaranteed savings or causal manufacturer comparisons;
-- regulatory, safety, credit, or procurement decisions;
-- production deployment without newer data and monitoring.
-
-## GitHub Publishing Checklist
-
-- [ ] `python run_pipeline.py` finishes with `PASS`
-- [ ] dashboard opens without a MySQL error
-- [ ] all four dashboard pages have been reviewed
-- [ ] screenshots have been added to `dashboard/screenshots/`
-- [ ] `.env` and raw data are absent from `git status`
-- [ ] generated outputs and the selected model are present in `git status`
-- [ ] result claims match the generated metrics
+- The analysis uses published Canadian vehicle ratings, not observed real-world fuel
+  use or emissions.
+- Manufacturer differences may reflect product mix, regulation, and historical
+  dataset coverage rather than causal engineering quality.
+- The dataset does not contain sales, vehicle distance, weight, power, drivetrain,
+  or lifecycle-emissions information.
+- The opportunity page is a class-year peer benchmark. It is not a forecast of
+  realised savings or a procurement recommendation.
+- The project is an offline portfolio analysis. It does not claim live,
+  production-ready, or causal emissions impact.
