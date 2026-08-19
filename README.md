@@ -41,19 +41,19 @@ answer different business questions:
 
 ### Executive Overview
 
-![Executive Overview](dashboard/mockups/01_executive_overview.png)
+![Executive Overview](dashboard/screenshots/01_executive_overview.png)
 
 ### Segment Benchmark
 
-![Segment Benchmark](dashboard/mockups/02_segment_benchmark.png)
+![Segment Benchmark](dashboard/screenshots/02_segment_benchmark.png)
 
 ### Model Performance
 
-![Model Performance](dashboard/mockups/03_model_performance.png)
+![Model Performance](dashboard/screenshots/03_model_performance.png)
 
 ### Opportunity Scenario
 
-![Opportunity Scenario](dashboard/mockups/04_opportunity_scenario.png)
+![Opportunity Scenario](dashboard/screenshots/04_opportunity_scenario.png)
 
 The dashboard construction details are documented in:
 
