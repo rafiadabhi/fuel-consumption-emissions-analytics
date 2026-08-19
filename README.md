@@ -1,9 +1,6 @@
 # Fuel Consumption & Emissions Analytics
 
-I built this project to analyze Canadian vehicle fuel-consumption ratings and turn
-them into practical fuel-efficiency and emissions-benchmarking insights. The
-project combines Python, MySQL, SQL, machine learning, Streamlit, and Plotly in one
-reproducible workflow.
+Built this project to analyze Canadian vehicle fuel-consumption ratings and turn them into practical fuel-efficiency and emissions-benchmarking insights. Leveraged ChatGPT (SOL 5.6) as an AI co-pilot to accelerate the entire development lifecycle from data exploration and SQL query optimization in MySQL, to feature engineering and machine learning modeling, all the way to building an interactive Streamlit dashboard with Plotly visualizations. The project combines Python, MySQL, SQL, machine learning, Streamlit, and Plotly into one fully reproducible, end-to-end workflow.
 
 **Author:** Rafi Adabhi Sunarya  
 **Project title:** Fuel Consumption & Emissions Analytics 
