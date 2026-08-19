@@ -53,6 +53,8 @@ flowchart TD
 
 ```text
 fuel-consumption-emissions-analytics/
+├── .streamlit/
+│   └── config.toml
 ├── dashboard/
 │   ├── app.py
 │   ├── data_access.py
@@ -175,6 +177,11 @@ A successful run ends with a validation report whose status is `PASS`.
 ```bash
 streamlit run dashboard/app.py
 ```
+
+Run that command from the project root so Streamlit loads the pinned light theme
+from `.streamlit/config.toml`. If the dashboard was already open before a theme or
+source update, stop it with `Ctrl+C` and start it again instead of only refreshing
+the browser tab.
 
 The dashboard queries MySQL directly and contains four pages:
 

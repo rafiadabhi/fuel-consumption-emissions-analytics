@@ -1,0 +1,4 @@
+source_row_number,ModelYear,Make,Model,VehicleClass,EngineSize_L,Cylinders,Transmission,FuelType,FuelConsCity_L100km,FuelConsHwy_L100km,Comb_L100km,Comb_mpg,CO2Emission_g_km,CO2Rating,SmogRating
+592,1995,NISSAN,AXXESS,MINIVAN,2.4,4,A4,X,13.5,10.5,12.2,23,281,,
+594,1995,NISSAN,AXXESS,MINIVAN,2.4,4,M5,X,12.6,9.9,11.4,25,262,,
+3899,2000,LAND ROVER,DISCOVERY SERIES II 4X4,SUV,4.0,8,A4,Z,19.6,14.9,17.5,16,403,,

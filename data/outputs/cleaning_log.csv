@@ -1,0 +1,4 @@
+step,rows_before,rows_after,rows_removed,reason
+source ingestion,27001,27001,0,Read supplied CSV without modifying it
+exact duplicate removal,27001,26998,3,Remove only fully identical records
+canonicalization and feature engineering,26998,26998,0,Standardize names and create auditable peer benchmarks

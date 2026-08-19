@@ -1,0 +1,9 @@
+importance_id,model_name,feature,importance_mean_mae_increase,importance_std,importance_rank
+1,Random Forest (Tuned),engine_size_l,31.59326668,0.66699023,1
+2,Random Forest (Tuned),cylinders,12.32551825,0.35989565,2
+3,Random Forest (Tuned),vehicle_class,9.60449638,0.25253649,3
+4,Random Forest (Tuned),make,6.63647218,0.23402861,4
+5,Random Forest (Tuned),transmission_family,6.20090166,0.24550712,5
+6,Random Forest (Tuned),fuel_type,3.44896796,0.12311264,6
+7,Random Forest (Tuned),gear_count,2.87303955,0.12274187,7
+8,Random Forest (Tuned),model_year,0.0,0.0,8

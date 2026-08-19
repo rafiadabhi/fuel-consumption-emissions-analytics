@@ -1,0 +1,8 @@
+metric_id,model_name,model_scope,split,eligible_for_selection,fit_period,mae,rmse,mape,r_squared,mean_error_pred_minus_actual,p90_absolute_error
+1,Median Baseline,early_specification,validation,1,1995-2019,50.773779,64.101803,0.22556176,-0.03506215,11.797943,97.6
+2,Ridge Regression,early_specification,validation,1,1995-2019,21.756464,28.850725,0.087779,0.7903285,-10.117244,45.414329
+3,Hist Gradient Boosting,early_specification,validation,1,1995-2019,15.94574,22.139872,0.06478292,0.87652582,-2.104361,33.498193
+4,Random Forest (Tuned),early_specification,validation,1,1995-2019,12.166137,18.928142,0.04797719,0.9097511,-1.494285,28.908952
+5,Random Forest (Tuned),early_specification,test,1,1995-2021 refit,11.330056,18.285312,0.04339762,0.91984177,-2.19979,26.97923
+6,Median Baseline,early_specification,test,0,1995-2021 refit,52.24744,65.444377,0.23151457,-0.02680511,10.573948,99.0
+7,Measurement-Rich RF (Diagnostic),measurement_rich_circular_diagnostic,test,0,1995-2021 refit,1.073919,1.929543,0.00414159,0.99910741,-0.075624,2.465595

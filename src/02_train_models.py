@@ -517,7 +517,9 @@ def main() -> None:
         scoring="neg_mean_absolute_error",
         n_repeats=8,
         random_state=42,
-        n_jobs=-1,
+        # Keep the diagnostic single-process on Windows to avoid Joblib
+        # memmapping the test matrix into a space-constrained temp directory.
+        n_jobs=1,
     )
     feature_importance = pd.DataFrame(
         {

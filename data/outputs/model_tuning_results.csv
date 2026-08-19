@@ -1,0 +1,5 @@
+tuning_id,model_name,max_depth,min_samples_leaf,max_features,n_estimators,mae,rmse,mape,r_squared,mean_error_pred_minus_actual,p90_absolute_error,elapsed_seconds,selected_configuration
+3,Random Forest,,1,0.7,300,12.166137,18.928142,0.04797719,0.9097511,-1.494285,28.908952,33.011,1
+4,Random Forest,,1,1.0,300,12.234634,19.047266,0.04815423,0.90861157,-1.629998,29.133214,44.629,0
+2,Random Forest,18.0,1,0.7,300,13.185575,19.323484,0.05220948,0.90594177,-1.795126,30.322887,36.791,0
+1,Random Forest,14.0,1,0.7,300,14.503152,20.236132,0.05814085,0.89684721,-2.098497,30.799387,23.773,0

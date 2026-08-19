@@ -1,0 +1,82 @@
+{
+  "final_title": "Fuel Consumption & Emissions Analytics",
+  "target": "rated tailpipe CO2 emissions (g/km)",
+  "primary_use_case": "early-specification prediction without measured fuel-consumption outputs",
+  "selected_model": "Random Forest (Tuned)",
+  "selection_rule": "minimum 2020-2021 validation MAE, RMSE as tie-breaker",
+  "selected_random_forest_parameters": {
+    "max_depth": null,
+    "min_samples_leaf": 1,
+    "max_features": 0.7,
+    "n_estimators": 300
+  },
+  "model_features": [
+    "model_year",
+    "engine_size_l",
+    "cylinders",
+    "gear_count",
+    "make",
+    "vehicle_class",
+    "transmission_family",
+    "fuel_type"
+  ],
+  "excluded_measurement_and_target_derived_features": [
+    "fuel_cons_city_l_100km",
+    "fuel_cons_hwy_l_100km",
+    "fuel_cons_comb_l_100km",
+    "fuel_economy_comb_mpg",
+    "co2_rating",
+    "smog_rating",
+    "class-year CO2 benchmarks"
+  ],
+  "split_summary": {
+    "train": {
+      "rows": 23295,
+      "year_min": 1995,
+      "year_max": 2019,
+      "average_target": 278.3391285683623
+    },
+    "validation": {
+      "rows": 1945,
+      "year_min": 2020,
+      "year_max": 2021,
+      "average_target": 257.2020565552699
+    },
+    "development": {
+      "rows": 25240,
+      "year_min": 1995,
+      "year_max": 2021,
+      "average_target": 276.7103011093502
+    },
+    "test": {
+      "rows": 1758,
+      "year_min": 2022,
+      "year_max": 2023,
+      "average_target": 258.4260523321957
+    }
+  },
+  "test_metrics": {
+    "mae": 11.330056457352335,
+    "rmse": 18.28531249888089,
+    "mape": 0.04339761787638077,
+    "r_squared": 0.9198417687408716,
+    "mean_error_pred_minus_actual": -2.1997896358907707,
+    "p90_absolute_error": 26.979229513677865
+  },
+  "test_prediction_range": {
+    "minimum": 97.049,
+    "maximum": 560.253
+  },
+  "measurement_rich_diagnostic": {
+    "mae": 1.073919144642725,
+    "r_squared": 0.9991074091421371,
+    "interpretation": "Near-perfect performance is circular for the early-specification use case and is not the selected model."
+  },
+  "limitations": [
+    "Predictions estimate published rated tailpipe CO2, not real-world or lifecycle emissions.",
+    "Manufacturer effects may reflect historical product mix rather than causal engineering quality.",
+    "No vehicle weight, power, drivetrain, electrification flag, sales count, or distance field is supplied.",
+    "The 2022-2023 test set measures temporal generalization only for the supplied Canadian ratings data."
+  ],
+  "elapsed_seconds": 214.15
+}

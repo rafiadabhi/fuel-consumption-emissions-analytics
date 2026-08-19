@@ -21,7 +21,7 @@ from data_access import (
 
 st.set_page_config(
     page_title="Fuel Consumption & Emissions Analytics",
-    page_icon="⛽",
+    page_icon="🚘",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -50,37 +50,42 @@ st.markdown(
         --green: {GREEN};
         --dark-green: {DARK_GREEN};
     }}
-    .stApp {{
-        background: var(--bg);
-        color: var(--text);
+    html, body {{
+        color-scheme: light !important;
+        background: #E9ECE8 !important;
+    }}
+    #MainMenu,
+    footer,
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    [data-testid="stStatusWidget"] {{
+        display: none !important;
+    }}
+    .stApp,
+    [data-testid="stAppViewContainer"],
+    [data-testid="stMain"],
+    [data-testid="stMainBlockContainer"] {{
+        background: var(--bg) !important;
+        color: var(--text) !important;
     }}
     .block-container {{
         max-width: 1480px;
-        padding-top: 1.35rem;
-        padding-bottom: 2.2rem;
+        padding: 1rem 2rem 2.2rem;
     }}
     [data-testid="stSidebar"] {{
-        background: #F8F8F6;
+        background: #F8F9F7 !important;
         border-right: 1px solid var(--line);
+        min-width: 270px !important;
+        max-width: 270px !important;
     }}
     [data-testid="stSidebar"] .block-container {{
-        padding-top: 1.4rem;
+        padding: 1.75rem 1.15rem 1.4rem;
     }}
-    [data-testid="stSidebar"] [role="radiogroup"] label {{
-        border-radius: 11px;
-        padding: 0.52rem 0.62rem;
-        margin-bottom: 0.24rem;
-        color: #68756E;
+    [data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] {{
+        display: none !important;
     }}
-    [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {{
-        background: #E6F1EB;
-        color: var(--dark-green);
-        font-weight: 700;
-    }}
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {{
-        color: inherit;
-    }}
-    h1, h2, h3, p, label, div {{
+    h1, h2, h3, p, label, div, input, button {{
         font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }}
     .brand {{
@@ -110,12 +115,100 @@ st.markdown(
         text-transform: uppercase;
         margin: 0 0 0.55rem;
     }}
+    [data-testid="stSidebar"] [role="radiogroup"] {{
+        gap: 0.25rem;
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label {{
+        position: relative;
+        min-height: 44px;
+        border-radius: 12px;
+        padding: 0.68rem 0.65rem 0.68rem 2.55rem;
+        margin-bottom: 0.12rem;
+        color: #819087 !important;
+        transition: background 120ms ease, color 120ms ease;
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label > div:first-child {{
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        overflow: hidden;
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label::before {{
+        content: "▦";
+        position: absolute;
+        left: 0.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #A9B7B0;
+        font-size: 1.24rem;
+        line-height: 1;
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label p {{
+        color: inherit !important;
+        font-size: 0.78rem !important;
+        font-weight: 500;
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {{
+        background: #FFFFFF !important;
+        color: var(--text) !important;
+        font-weight: 700 !important;
+        box-shadow: 0 5px 16px rgba(20, 26, 23, 0.055);
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked)::before {{
+        color: var(--green);
+    }}
+    [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked)::after {{
+        content: "";
+        position: absolute;
+        left: -1.15rem;
+        top: 7px;
+        bottom: 7px;
+        width: 5px;
+        border-radius: 999px;
+        background: var(--green);
+    }}
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {{
+        color: inherit;
+    }}
+    .general-links {{
+        margin-top: 2.4rem;
+        color: #91A097;
+        font-size: 0.76rem;
+        line-height: 2.8;
+    }}
+    .general-links span {{
+        display: block;
+    }}
+    .general-links i {{
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        border: 1px solid #91A097;
+        border-radius: 50%;
+        margin-right: 0.72rem;
+        vertical-align: -2px;
+    }}
+    .top-meta {{
+        text-align: right;
+        line-height: 1.16;
+        padding-top: 0.2rem;
+    }}
+    .top-meta strong {{
+        color: var(--text);
+        display: block;
+        font-size: 0.76rem;
+        white-space: nowrap;
+    }}
+    .top-meta span {{
+        color: var(--muted);
+        display: block;
+        font-size: 0.62rem;
+        margin-top: 0.18rem;
+        white-space: nowrap;
+    }}
     .page-head {{
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 1.5rem;
-        margin: 0.35rem 0 0.9rem;
+        margin: 0.25rem 0 0.65rem;
     }}
     .page-title {{
         color: var(--text);
@@ -130,26 +223,6 @@ st.markdown(
         margin-top: 0.38rem;
         font-size: 0.88rem;
     }}
-    .dataset-meta {{
-        flex: 0 0 auto;
-        min-width: 148px;
-        text-align: right;
-        color: var(--text);
-        line-height: 1.25;
-        padding-top: 0.18rem;
-    }}
-    .dataset-meta strong {{
-        display: block;
-        white-space: nowrap;
-        font-size: 0.82rem;
-    }}
-    .dataset-meta span {{
-        display: block;
-        white-space: nowrap;
-        color: var(--muted);
-        font-size: 0.69rem;
-        margin-top: 0.18rem;
-    }}
     .filter-label {{
         color: var(--muted);
         font-size: 0.66rem;
@@ -159,21 +232,22 @@ st.markdown(
     }}
     div[data-testid="stMetric"],
     div[data-testid="stVerticalBlockBorderWrapper"] {{
-        background: var(--card);
-        border: 1px solid rgba(228, 232, 228, 0.92);
-        border-radius: 17px;
+        background: var(--card) !important;
+        border: 1px solid rgba(228, 232, 228, 0.92) !important;
+        border-radius: 17px !important;
         box-shadow: 0 7px 20px rgba(20, 26, 23, 0.045);
     }}
     div[data-testid="stVerticalBlockBorderWrapper"] {{
         padding: 0.1rem 0.25rem 0.2rem;
+        overflow: hidden;
     }}
     .kpi-card {{
         background: var(--card);
         border: 1px solid rgba(228, 232, 228, 0.92);
         border-radius: 17px;
         box-shadow: 0 7px 20px rgba(20, 26, 23, 0.045);
-        min-height: 118px;
-        padding: 1rem 1.05rem 0.9rem;
+        min-height: 112px;
+        padding: 0.95rem 1.05rem 0.82rem;
         box-sizing: border-box;
         position: relative;
         overflow: hidden;
@@ -185,17 +259,17 @@ st.markdown(
     }}
     .kpi-label {{
         color: var(--text);
-        font-size: 0.78rem;
+        font-size: 0.74rem;
         line-height: 1.2;
         padding-right: 1.6rem;
     }}
     .featured .kpi-label {{ color: rgba(255,255,255,0.93); }}
     .kpi-value {{
         color: var(--text);
-        font-size: clamp(1.62rem, 2.25vw, 2.25rem);
+        font-size: clamp(1.55rem, 2.1vw, 2.12rem);
         line-height: 1;
         font-weight: 500;
-        margin-top: 1.02rem;
+        margin-top: 0.85rem;
         letter-spacing: -0.03em;
         white-space: nowrap;
     }}
@@ -207,8 +281,8 @@ st.markdown(
     .featured .kpi-value {{ color: white; }}
     .kpi-note {{
         color: {GREEN};
-        font-size: 0.66rem;
-        margin-top: 0.45rem;
+        font-size: 0.63rem;
+        margin-top: 0.38rem;
         white-space: nowrap;
     }}
     .featured .kpi-note {{ color: rgba(255,255,255,0.76); }}
@@ -225,7 +299,11 @@ st.markdown(
         font-size: 0.78rem;
     }}
     .db-card {{
-        margin-top: 2rem;
+        position: fixed;
+        left: 1.15rem;
+        bottom: 1.5rem;
+        width: 232px;
+        box-sizing: border-box;
         background: {DARK_GREEN};
         color: white;
         border-radius: 16px;
@@ -235,27 +313,82 @@ st.markdown(
     }}
     .db-card strong {{ display: block; font-size: 0.82rem; margin-bottom: 0.12rem; }}
     .db-card span {{ color: #9DE0BD; }}
-    .stButton > button {{
-        border-radius: 999px;
-        border-color: {GREEN};
-        color: {DARK_GREEN};
-        font-weight: 700;
+    [data-testid="stButton"] > button,
+    [data-testid="stDownloadButton"] > button {{
+        border-radius: 999px !important;
+        border: 1px solid {GREEN} !important;
+        background: #FFFFFF !important;
+        color: {DARK_GREEN} !important;
+        font-weight: 700 !important;
+        min-height: 42px;
     }}
-    .stButton > button:hover {{
-        border-color: {DARK_GREEN};
-        background: #E6F1EB;
-        color: {DARK_GREEN};
+    [data-testid="stButton"] > button[kind="primary"],
+    [data-testid="stBaseButton-primary"] {{
+        background: {GREEN} !important;
+        color: #FFFFFF !important;
     }}
+    [data-testid="stButton"] > button:hover,
+    [data-testid="stDownloadButton"] > button:hover {{
+        border-color: {DARK_GREEN} !important;
+        background: #E6F1EB !important;
+        color: {DARK_GREEN} !important;
+    }}
+    [data-testid="stButton"] > button[kind="primary"]:hover,
+    [data-testid="stBaseButton-primary"]:hover {{
+        background: {DARK_GREEN} !important;
+        color: #FFFFFF !important;
+    }}
+    [data-testid="stTextInput"] input,
     [data-baseweb="select"] > div,
-    [data-testid="stNumberInput"] input,
-    [data-testid="stSlider"] {{
-        border-radius: 12px;
+    [data-testid="stNumberInput"] input {{
+        background: #FFFFFF !important;
+        color: var(--text) !important;
+        -webkit-text-fill-color: var(--text) !important;
+        border-color: var(--line) !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }}
+    [data-testid="stTextInput"] input {{
+        min-height: 42px;
+    }}
+    [data-baseweb="select"] > div {{
+        min-height: 44px;
+    }}
+    [data-baseweb="select"] span,
+    [data-baseweb="select"] svg,
+    [data-testid="stNumberInput"] button,
+    [data-testid="stNumberInput"] button svg {{
+        color: var(--text) !important;
+        fill: var(--text) !important;
+    }}
+    [data-baseweb="popover"],
+    [data-baseweb="popover"] > div,
+    [role="listbox"],
+    [role="option"] {{
+        background: #FFFFFF !important;
+        color: var(--text) !important;
+    }}
+    [data-testid="stWidgetLabel"] p,
+    [data-testid="stSlider"] p,
+    [data-testid="stNumberInput"] p {{
+        color: #65736C !important;
+        font-size: 0.72rem !important;
+    }}
+    [data-testid="stSlider"] [role="slider"] {{
+        background: {GREEN} !important;
+        border-color: {GREEN} !important;
+        color: {GREEN} !important;
+    }}
+    [data-testid="stPlotlyChart"] {{
+        border-radius: 16px;
+        overflow: hidden;
     }}
     hr {{ border-color: var(--line); }}
     @media (max-width: 900px) {{
-        .page-head {{ flex-direction: column; gap: 0.5rem; }}
-        .dataset-meta {{ text-align: left; padding-top: 0; }}
+        [data-testid="stSidebar"] {{ min-width: 235px !important; max-width: 235px !important; }}
+        .block-container {{ padding-left: 1rem; padding-right: 1rem; }}
         .kpi-card {{ min-height: 108px; }}
+        .db-card {{ width: 197px; }}
     }}
     </style>
     """,
@@ -292,22 +425,90 @@ def aggregate_weighted(
     return result.drop(columns=weighted_columns)
 
 
-def page_header(title: str, subtitle: str, first_year: int, latest_year: int) -> None:
-    st.markdown(
-        f"""
-        <div class="page-head">
-          <div>
-            <h1 class="page-title">{escape(title)}</h1>
-            <div class="page-subtitle">{escape(subtitle)}</div>
-          </div>
-          <div class="dataset-meta">
-            <strong>MY{first_year}–{latest_year}</strong>
-            <span>All vehicle ratings</span>
-          </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+def render_top_toolbar(first_year: int, latest_year: int) -> str:
+    search_col, spacer, refresh_col, meta_col = st.columns(
+        [2.35, 4.5, 0.42, 0.78], vertical_alignment="center"
     )
+    with search_col:
+        search_query = st.text_input(
+            "Search make or model",
+            placeholder="Search make or model",
+            label_visibility="collapsed",
+            key="global_vehicle_search",
+        )
+    with refresh_col:
+        if st.button(
+            "↻",
+            key="top_refresh",
+            help="Refresh MySQL data",
+            use_container_width=True,
+        ):
+            st.cache_data.clear()
+            st.rerun()
+    with meta_col:
+        st.markdown(
+            f"""
+            <div class="top-meta">
+              <strong>MY{first_year}–{latest_year}</strong>
+              <span>All vehicle ratings</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    return search_query.strip()
+
+
+def page_header(
+    title: str,
+    subtitle: str,
+    export_frame: pd.DataFrame,
+    page_key: str,
+) -> None:
+    title_col, refresh_col, export_col = st.columns(
+        [5.9, 0.78, 0.88], vertical_alignment="center"
+    )
+    with title_col:
+        st.markdown(
+            f"""
+            <div class="page-head">
+              <h1 class="page-title">{escape(title)}</h1>
+              <div class="page-subtitle">{escape(subtitle)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with refresh_col:
+        if st.button(
+            "↻ Refresh",
+            type="primary",
+            key=f"refresh_{page_key}",
+            use_container_width=True,
+        ):
+            st.cache_data.clear()
+            st.rerun()
+    with export_col:
+        st.download_button(
+            "Export Data",
+            data=export_frame.to_csv(index=False).encode("utf-8"),
+            file_name=f"{page_key}.csv",
+            mime="text/csv",
+            key=f"export_{page_key}",
+            use_container_width=True,
+        )
+
+
+def apply_search(frame: pd.DataFrame, search_query: str) -> pd.DataFrame:
+    if not search_query:
+        return frame
+    searchable = [column for column in ("make", "model") if column in frame.columns]
+    if not searchable:
+        return frame
+    matched = pd.Series(False, index=frame.index)
+    for column in searchable:
+        matched |= frame[column].fillna("").astype(str).str.contains(
+            search_query, case=False, regex=False
+        )
+    return frame.loc[matched].copy()
 
 
 def render_kpis(items: list[tuple[str, str, str]]) -> None:
@@ -415,18 +616,23 @@ def empty_selection() -> None:
     st.warning("No records match the selected filters.")
 
 
-def executive_overview(kpis: pd.Series) -> None:
-    data = load_segment_summary()
-    engine_data = load_engine_band_summary()
-    first_year = int(data["model_year"].min())
-    latest_year = int(data["model_year"].max())
+def executive_overview(kpis: pd.Series, search_query: str) -> None:
+    all_data = load_segment_summary()
+    all_engine_data = load_engine_band_summary()
+    first_year = int(all_data["model_year"].min())
+    latest_year = int(all_data["model_year"].max())
+    data = apply_search(all_data, search_query)
+    engine_data = apply_search(all_engine_data, search_query)
 
     page_header(
         "Executive Overview",
         "Vehicle efficiency and emissions performance across model years.",
-        first_year,
-        latest_year,
+        data,
+        "executive_overview",
     )
+    if data.empty:
+        empty_selection()
+        return
     st.markdown('<div class="filter-label">Filters</div>', unsafe_allow_html=True)
     f1, f2, f3 = st.columns([1.05, 1.3, 1.1])
     year_range = f1.slider(
@@ -500,7 +706,19 @@ def executive_overview(kpis: pd.Series) -> None:
             marker={"line": {"color": CARD, "width": 2}},
             hovertemplate="%{label}<br>%{value:,} ratings<br>%{percent}<extra></extra>",
         )
-        chart_card(style_figure(figure, "Fuel Type Mix", height=350, show_grid=False))
+        figure = style_figure(figure, "Fuel Type Mix", height=350, show_grid=False)
+        figure.add_annotation(
+            x=0.5,
+            y=0.5,
+            text=f"<b>{total_records:,}</b><br><span style='font-size:10px'>ratings</span>",
+            showarrow=False,
+            font={"size": 18, "color": TEXT},
+        )
+        figure.update_layout(
+            legend={"orientation": "v", "x": 1.02, "xanchor": "left", "y": 0.52},
+            margin={"l": 20, "r": 92, "t": 62, "b": 24},
+        )
+        chart_card(figure)
 
     class_summary = aggregate_weighted(filtered, "vehicle_class", ["average_co2_g_km"])
     class_summary = class_summary.nlargest(8, "average_co2_g_km").sort_values("average_co2_g_km")
@@ -530,29 +748,44 @@ def executive_overview(kpis: pd.Series) -> None:
         figure.update_xaxes(title="Average CO₂ (g/km)")
         chart_card(style_figure(figure, "Average CO₂ by Vehicle Class", height=350, show_grid=False))
     with right:
+        bubble_sizes = 34 + (
+            engine_summary["average_combined_l_100km"]
+            / engine_summary["average_combined_l_100km"].max()
+            * 46
+        )
         figure = go.Figure(
-            go.Bar(
+            go.Scatter(
                 x=engine_summary["engine_size_band"].astype(str),
-                y=engine_summary["average_combined_l_100km"],
-                marker={"color": GREEN_SCALE[: len(engine_summary)], "cornerradius": 11},
-                hovertemplate="%{x}<br>%{y:.1f} L/100 km<extra></extra>",
+                y=[0] * len(engine_summary),
+                mode="markers",
+                marker={
+                    "size": bubble_sizes,
+                    "color": GREEN_SCALE[: len(engine_summary)],
+                    "line": {"color": CARD, "width": 2},
+                },
+                customdata=engine_summary[["average_combined_l_100km"]],
+                hovertemplate="%{x}<br>%{customdata[0]:.1f} L/100 km<extra></extra>",
             )
         )
-        figure.update_yaxes(title="Combined L/100 km")
-        figure.update_xaxes(title="Engine size band")
+        figure.update_yaxes(visible=False, range=[-0.8, 0.8])
+        figure.update_xaxes(title=None, showgrid=False)
         chart_card(style_figure(figure, "Fuel Use by Engine Band", height=350, show_grid=False))
 
 
-def segment_benchmark(kpis: pd.Series) -> None:
-    data = load_segment_summary()
-    first_year = int(data["model_year"].min())
-    latest_year = int(data["model_year"].max())
+def segment_benchmark(kpis: pd.Series, search_query: str) -> None:
+    all_data = load_segment_summary()
+    first_year = int(all_data["model_year"].min())
+    latest_year = int(all_data["model_year"].max())
+    data = apply_search(all_data, search_query)
     page_header(
         "Segment Benchmark",
         "Compare vehicle classes, manufacturers, fuel types, and peer gaps.",
-        first_year,
-        latest_year,
+        data,
+        "segment_benchmark",
     )
+    if data.empty:
+        empty_selection()
+        return
 
     st.markdown('<div class="filter-label">Filters</div>', unsafe_allow_html=True)
     f1, f2, f3, f4 = st.columns([1, 1.18, 1.18, 1.05])
@@ -686,22 +919,38 @@ def segment_benchmark(kpis: pd.Series) -> None:
             marker={"line": {"color": CARD, "width": 2}},
             hovertemplate="%{label}<br>%{value:,} ratings<br>%{percent}<extra></extra>",
         )
-        chart_card(style_figure(figure, "Class Composition", height=350, show_grid=False))
+        figure = style_figure(figure, "Class Composition", height=350, show_grid=False)
+        figure.add_annotation(
+            x=0.5,
+            y=0.5,
+            text=(
+                f"<b>{filtered['vehicle_class'].nunique():,}</b>"
+                "<br><span style='font-size:10px'>classes</span>"
+            ),
+            showarrow=False,
+            font={"size": 18, "color": TEXT},
+        )
+        figure.update_layout(
+            legend={"orientation": "v", "x": 1.02, "xanchor": "left", "y": 0.52},
+            margin={"l": 20, "r": 104, "t": 62, "b": 24},
+        )
+        chart_card(figure)
 
 
-def model_performance(kpis: pd.Series) -> None:
+def model_performance(kpis: pd.Series, search_query: str) -> None:
     metrics = load_model_metrics()
     importance = load_feature_importance()
-    predictions = load_test_predictions()
+    predictions = apply_search(load_test_predictions(), search_query)
     segment_errors = load_segment_errors()
-    first_year = int(kpis["first_model_year"])
-    latest_year = int(kpis["latest_model_year"])
     page_header(
         "Model Performance",
         "Temporal evaluation of the selected early-specification CO₂ model.",
-        first_year,
-        latest_year,
+        predictions,
+        "model_performance",
     )
+    if predictions.empty:
+        empty_selection()
+        return
 
     selected_test = metrics.loc[
         (metrics["model_scope"] == "early_specification")
@@ -714,34 +963,45 @@ def model_performance(kpis: pd.Series) -> None:
 
     st.markdown('<div class="filter-label">Filters</div>', unsafe_allow_html=True)
     f1, f2 = st.columns([1, 1.5])
+    split_periods = {
+        "test": "Test · 2022–2023",
+        "validation": "Validation · 2020–2021",
+    }
     available_splits = [
-        split.title()
+        split_periods[split]
         for split in ["test", "validation"]
         if not metrics.loc[
             (metrics["model_name"] == selected_model_name) & (metrics["split"] == split)
         ].empty
     ]
     selected_split_label = f1.selectbox(
-        "Metric split",
+        "Evaluation split",
         available_splits,
         key="model_split",
     )
     segment_types = segment_errors["segment_type"].drop_duplicates().tolist()
-    selected_segment = f2.selectbox(
+    segment_labels = {
+        segment_type: str(segment_type).replace("_", " ").title()
+        for segment_type in segment_types
+    }
+    selected_segment_label = f2.selectbox(
         "Error segment",
-        segment_types,
+        ["All segments", *segment_labels.values()],
         key="error_segment",
+    )
+    selected_split = next(
+        split for split, label in split_periods.items() if label == selected_split_label
     )
 
     selected_metric = metrics.loc[
         (metrics["model_name"] == selected_model_name)
-        & (metrics["split"] == selected_split_label.lower())
+        & (metrics["split"] == selected_split)
     ].iloc[0]
     render_kpis(
         [
             ("Selected Model", selected_model_name, "validation MAE selection"),
             ("MAE", f"{float(selected_metric['mae']):.2f}", "g/km"),
-            ("R²", f"{float(selected_metric['r_squared']):.3f}", selected_split_label.lower()),
+            ("R²", f"{float(selected_metric['r_squared']):.3f}", selected_split),
             (
                 "P90 Absolute Error",
                 f"{float(selected_metric['p90_absolute_error']):.2f}",
@@ -825,9 +1085,16 @@ def model_performance(kpis: pd.Series) -> None:
     )
     importance_figure.update_xaxes(title="MAE increase after shuffle")
 
-    selected_errors = segment_errors.loc[
-        segment_errors["segment_type"] == selected_segment
-    ].nlargest(12, "mae").sort_values("mae")
+    if selected_segment_label == "All segments":
+        selected_errors = segment_errors.copy()
+    else:
+        selected_segment = next(
+            value for value, label in segment_labels.items() if label == selected_segment_label
+        )
+        selected_errors = segment_errors.loc[
+            segment_errors["segment_type"] == selected_segment
+        ].copy()
+    selected_errors = selected_errors.nlargest(6, "mae").sort_values("mae")
     error_figure = go.Figure(
         go.Bar(
             x=selected_errors["mae"],
@@ -861,16 +1128,17 @@ def model_performance(kpis: pd.Series) -> None:
         )
 
 
-def opportunity_scenario(kpis: pd.Series) -> None:
-    data = load_opportunities()
-    first_year = int(kpis["first_model_year"])
-    latest_year = int(kpis["latest_model_year"])
+def opportunity_scenario(kpis: pd.Series, search_query: str) -> None:
+    data = apply_search(load_opportunities(), search_query)
     page_header(
         "Opportunity Scenario",
         "Explore the class-year peer gap under an adjustable distance scenario.",
-        first_year,
-        latest_year,
+        data,
+        "opportunity_scenario",
     )
+    if data.empty:
+        empty_selection()
+        return
 
     opportunity_first_year = int(data["model_year"].min())
     opportunity_latest_year = int(data["model_year"].max())
@@ -933,7 +1201,7 @@ def opportunity_scenario(kpis: pd.Series) -> None:
         ]
     )
 
-    top = filtered.nlargest(15, "co2_gap_to_class_p25").copy()
+    top = filtered.nlargest(6, "co2_gap_to_class_p25").copy()
     top["vehicle_label"] = top["make"] + " — " + top["model"]
     top = top.sort_values("co2_gap_to_class_p25")
     largest_figure = go.Figure(
@@ -969,9 +1237,33 @@ def opportunity_scenario(kpis: pd.Series) -> None:
 
     left, right = st.columns([1.35, 1])
     with left:
-        chart_card(style_figure(largest_figure, "Largest Gaps", height=375, show_grid=False))
+        chart_card(
+            style_figure(
+                largest_figure,
+                "Largest Gaps to Class-Year P25",
+                height=375,
+                show_grid=False,
+            )
+        )
     with right:
-        chart_card(style_figure(mix_figure, "Opportunity Mix", height=375, show_grid=False))
+        mix_figure = style_figure(
+            mix_figure,
+            "Opportunity Mix by Vehicle Class",
+            height=375,
+            show_grid=False,
+        )
+        mix_figure.add_annotation(
+            x=0.5,
+            y=0.5,
+            text=f"<b>{len(filtered):,}</b><br><span style='font-size:10px'>screened</span>",
+            showarrow=False,
+            font={"size": 18, "color": TEXT},
+        )
+        mix_figure.update_layout(
+            legend={"orientation": "v", "x": 1.02, "xanchor": "left", "y": 0.52},
+            margin={"l": 20, "r": 112, "t": 62, "b": 24},
+        )
+        chart_card(mix_figure)
 
     distances = list(range(5_000, 50_001, 5_000))
     scenario_values = [
@@ -1026,22 +1318,33 @@ with st.sidebar:
         ],
         label_visibility="collapsed",
     )
-    st.divider()
-    if st.button("Refresh MySQL data", use_container_width=True):
-        st.cache_data.clear()
-        st.rerun()
+    st.markdown(
+        """
+        <div class="general-links">
+          <div class="menu-label">General</div>
+          <span><i></i>Data Quality</span>
+          <span><i></i>Documentation</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 try:
-    dashboard_kpis = load_kpis().iloc[0]
+    dashboard_kpi_frame = load_kpis()
+    dashboard_kpis = dashboard_kpi_frame.iloc[0]
+    search_query = render_top_toolbar(
+        int(dashboard_kpis["first_model_year"]),
+        int(dashboard_kpis["latest_model_year"]),
+    )
     if page == "Executive Overview":
-        executive_overview(dashboard_kpis)
+        executive_overview(dashboard_kpis, search_query)
     elif page == "Segment Benchmark":
-        segment_benchmark(dashboard_kpis)
+        segment_benchmark(dashboard_kpis, search_query)
     elif page == "Model Performance":
-        model_performance(dashboard_kpis)
+        model_performance(dashboard_kpis, search_query)
     else:
-        opportunity_scenario(dashboard_kpis)
+        opportunity_scenario(dashboard_kpis, search_query)
 
     with st.sidebar:
         st.markdown(
@@ -1056,7 +1359,8 @@ try:
         )
 except Exception as exc:
     st.error(
-        "The dashboard could not read MySQL. Run `python run_pipeline.py` first and "
-        "check the credentials in `.env`."
+        "The dashboard could not complete its MySQL query. Confirm that the pipeline "
+        "finished successfully and that `.env` contains the correct credentials."
     )
-    st.exception(exc)
+    with st.expander("Technical details"):
+        st.code(f"{type(exc).__name__}: {exc}")

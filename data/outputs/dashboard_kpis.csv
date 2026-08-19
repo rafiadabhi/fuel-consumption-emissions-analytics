@@ -1,0 +1,2 @@
+vehicle_records,first_model_year,latest_model_year,years_covered,latest_year_records,latest_average_co2_g_km,latest_average_combined_l_100km,co2_change_first_to_latest_pct,latest_average_peer_gap_g_km,selected_model,test_records,test_mae_g_km,test_rmse_g_km,test_mape,test_r_squared,test_p90_absolute_error_g_km
+26998,1995,2023,29,799,256.0889,10.99274,-0.16763423,41.6670839,Random Forest (Tuned),1758,11.330056,18.285312,0.04339762,0.91984177,26.97923

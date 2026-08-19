@@ -13,6 +13,10 @@ python run_pipeline.py
 streamlit run dashboard/app.py
 ```
 
+Run Streamlit from the project root. The tracked `.streamlit/config.toml` pins the
+approved light palette so browser dark mode does not recolor the controls. Restart
+the Streamlit process after replacing dashboard source or theme files.
+
 ## Dashboard Pages
 
 ### 1. Executive Overview

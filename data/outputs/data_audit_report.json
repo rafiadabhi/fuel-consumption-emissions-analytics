@@ -1,0 +1,332 @@
+{
+  "source_file": "MY1995-2023-Fuel-Consumption-Ratings.csv",
+  "source_sha256": "2cc4a0100c582286f2be6f53927a7bf3fe07b4c4cc9d878f2b3e6a746c08fcd1",
+  "source_rows": 27001,
+  "source_columns": 15,
+  "clean_rows": 26998,
+  "rows_removed_as_exact_duplicates": 3,
+  "source_missing_values": {
+    "ModelYear": 0,
+    "Make": 0,
+    "Model": 0,
+    "VehicleClass": 0,
+    "EngineSize_L": 0,
+    "Cylinders": 0,
+    "Transmission": 0,
+    "FuelType": 0,
+    "FuelConsCity_L100km": 0,
+    "FuelConsHwy_L100km": 0,
+    "Comb_L100km": 0,
+    "Comb_mpg": 0,
+    "CO2Emission_g_km": 0,
+    "CO2Rating": 18991,
+    "SmogRating": 20101
+  },
+  "source_data_types": {
+    "ModelYear": "int64",
+    "Make": "object",
+    "Model": "object",
+    "VehicleClass": "object",
+    "EngineSize_L": "float64",
+    "Cylinders": "int64",
+    "Transmission": "object",
+    "FuelType": "object",
+    "FuelConsCity_L100km": "float64",
+    "FuelConsHwy_L100km": "float64",
+    "Comb_L100km": "float64",
+    "Comb_mpg": "int64",
+    "CO2Emission_g_km": "int64",
+    "CO2Rating": "float64",
+    "SmogRating": "float64"
+  },
+  "numeric_profile": {
+    "vehicle_id": {
+      "count": 26998,
+      "min": 1.0,
+      "max": 26998.0,
+      "mean": 13499.5,
+      "median": 13499.5
+    },
+    "source_row_number": {
+      "count": 26998,
+      "min": 2.0,
+      "max": 27002.0,
+      "mean": 13503.311986073042,
+      "median": 13503.5
+    },
+    "model_year": {
+      "count": 26998,
+      "min": 1995.0,
+      "max": 2023.0,
+      "mean": 2010.0011111934218,
+      "median": 2010.0
+    },
+    "engine_size_l": {
+      "count": 26998,
+      "min": 0.8,
+      "max": 8.4,
+      "mean": 3.347707237573154,
+      "median": 3.0
+    },
+    "cylinders": {
+      "count": 26998,
+      "min": 2.0,
+      "max": 16.0,
+      "mean": 5.837210163715831,
+      "median": 6.0
+    },
+    "gear_count": {
+      "count": 26998,
+      "min": 0.0,
+      "max": 10.0,
+      "mean": 5.639047336839766,
+      "median": 6.0
+    },
+    "fuel_cons_city_l_100km": {
+      "count": 26998,
+      "min": 4.0,
+      "max": 33.3,
+      "mean": 13.84153270612638,
+      "median": 13.4
+    },
+    "fuel_cons_hwy_l_100km": {
+      "count": 26998,
+      "min": 3.9,
+      "max": 22.1,
+      "mean": 10.009819245870064,
+      "median": 9.5
+    },
+    "fuel_cons_comb_l_100km": {
+      "count": 26998,
+      "min": 4.0,
+      "max": 27.5,
+      "mean": 12.117382769094005,
+      "median": 11.6
+    },
+    "fuel_economy_comb_mpg": {
+      "count": 26998,
+      "min": 10.0,
+      "max": 71.0,
+      "mean": 24.934069190310392,
+      "median": 24.0
+    },
+    "co2_emissions_g_km": {
+      "count": 26998,
+      "min": 94.0,
+      "max": 633.0,
+      "mean": 275.5197051633454,
+      "median": 268.0
+    },
+    "co2_rating": {
+      "count": 8010,
+      "min": 1.0,
+      "max": 10.0,
+      "mean": 4.644444444444445,
+      "median": 5.0
+    },
+    "smog_rating": {
+      "count": 6900,
+      "min": 1.0,
+      "max": 8.0,
+      "mean": 4.74231884057971,
+      "median": 5.0
+    },
+    "city_hwy_gap_l_100km": {
+      "count": 26998,
+      "min": -1.5,
+      "max": 12.8,
+      "mean": 3.831713460256315,
+      "median": 3.8
+    },
+    "city_hwy_ratio": {
+      "count": 26998,
+      "min": 0.788732,
+      "max": 1.869919,
+      "mean": 1.3811714411808285,
+      "median": 1.383838
+    },
+    "co2_per_comb_l": {
+      "count": 26998,
+      "min": 10.666667,
+      "max": 29.108911,
+      "mean": 22.91145887291651,
+      "median": 23.020134
+    },
+    "class_year_co2_median": {
+      "count": 26998,
+      "min": 195.0,
+      "max": 441.0,
+      "mean": 271.3582857989481,
+      "median": 265.0
+    },
+    "class_year_co2_p25": {
+      "count": 26998,
+      "min": 172.5,
+      "max": 414.0,
+      "mean": 244.20710793392104,
+      "median": 237.5
+    },
+    "co2_vs_class_year_median": {
+      "count": 26998,
+      "min": -190.0,
+      "max": 345.5,
+      "mean": 4.1614193643973625,
+      "median": 0.0
+    },
+    "co2_gap_to_class_p25": {
+      "count": 26998,
+      "min": 0.0,
+      "max": 371.0,
+      "mean": 36.98210052596489,
+      "median": 23.0
+    },
+    "above_class_year_median": {
+      "count": 26998,
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.4809985924883325,
+      "median": 0.0
+    },
+    "city_below_highway_flag": {
+      "count": 26998,
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.009556263426920513,
+      "median": 0.0
+    }
+  },
+  "date_range": {
+    "min_model_year": 1995,
+    "max_model_year": 2023
+  },
+  "unique_values": {
+    "raw_make": 90,
+    "canonical_make": 55,
+    "model": 4275,
+    "raw_vehicle_class": 33,
+    "canonical_vehicle_class": 18,
+    "transmission": 30,
+    "fuel_type": 5
+  },
+  "rating_availability": {
+    "co2_rating_nonmissing": 8010,
+    "co2_rating_first_year": 2016,
+    "smog_rating_nonmissing": 6900,
+    "smog_rating_first_year": 2017
+  },
+  "validation_checks": {
+    "clean_rows": 26998,
+    "unique_vehicle_ids": 26998,
+    "missing_required_values": 0,
+    "invalid_model_year": 0,
+    "invalid_engine_size": 0,
+    "invalid_cylinders": 0,
+    "invalid_consumption": 0,
+    "invalid_co2": 0,
+    "invalid_co2_rating": 0,
+    "invalid_smog_rating": 0,
+    "unmapped_fuel_codes": 0,
+    "unmapped_transmission_codes": 0,
+    "combined_outside_city_highway_range": 0,
+    "city_below_highway_rows": 258
+  },
+  "iqr_outlier_counts_descriptive_only": {
+    "engine_size_l": {
+      "count": 51,
+      "lower_bound": -0.5500000000000007,
+      "upper_bound": 7.050000000000001
+    },
+    "cylinders": {
+      "count": 15,
+      "lower_bound": -2.0,
+      "upper_bound": 14.0
+    },
+    "fuel_cons_city_l_100km": {
+      "count": 615,
+      "lower_bound": 4.400000000000001,
+      "upper_bound": 22.8
+    },
+    "fuel_cons_hwy_l_100km": {
+      "count": 591,
+      "lower_bound": 3.3999999999999977,
+      "upper_bound": 16.200000000000003
+    },
+    "fuel_cons_comb_l_100km": {
+      "count": 558,
+      "lower_bound": 3.9000000000000004,
+      "upper_bound": 19.9
+    },
+    "fuel_economy_comb_mpg": {
+      "count": 411,
+      "lower_bound": 6.5,
+      "upper_bound": 42.5
+    },
+    "co2_emissions_g_km": {
+      "count": 342,
+      "lower_bound": 102.5,
+      "upper_bound": 442.5
+    }
+  },
+  "leakage_diagnostics": {
+    "co2_combined_consumption_correlation": 0.9335106342322416,
+    "fuel_specific_linear_relationships": {
+      "D": {
+        "rows": 488,
+        "slope": 27.051408683523558,
+        "intercept": -1.0955440900553663,
+        "r_squared": 0.998915173170381
+      },
+      "E": {
+        "rows": 1091,
+        "slope": 15.777836648139221,
+        "intercept": 6.2306580631494715,
+        "r_squared": 0.9918699296895455
+      },
+      "N": {
+        "rows": 39,
+        "slope": 19.397472583819923,
+        "intercept": -10.153484294623047,
+        "r_squared": 0.9946014176026727
+      },
+      "X": {
+        "rows": 14845,
+        "slope": 22.874565098582966,
+        "intercept": 2.68460945758436,
+        "r_squared": 0.9989992419597783
+      },
+      "Z": {
+        "rows": 10535,
+        "slope": 22.96187306901113,
+        "intercept": 2.1756922138394934,
+        "r_squared": 0.9981818769177428
+      }
+    },
+    "share_within_0_11_of_55_45_weighted_consumption": 0.9967404992962442,
+    "excluded_from_primary_model": [
+      "fuel_cons_city_l_100km",
+      "fuel_cons_hwy_l_100km",
+      "fuel_cons_comb_l_100km",
+      "fuel_economy_comb_mpg",
+      "co2_rating",
+      "smog_rating",
+      "all peer benchmark fields derived from the target"
+    ]
+  },
+  "modeling_scope": {
+    "unit_of_analysis": "one published vehicle configuration/model-year rating",
+    "target": "rated tailpipe CO2 emissions in g/km",
+    "primary_use_case": "early-specification ranking before fuel-consumption test outputs are used",
+    "class_imbalance": "not applicable to regression",
+    "split": "train 1995-2019; validation 2020-2021; test 2022-2023"
+  },
+  "limitations": [
+    "One row is a rated vehicle configuration, not a sold vehicle or fleet unit; averages are not sales-weighted.",
+    "The data contains rated laboratory values, not real-world driving outcomes, fuel cost, distance, or fleet utilization.",
+    "CO2 and smog rating fields were introduced later and must not be imputed backward.",
+    "Vehicle-class labels changed historically and are canonicalized while the raw label is retained.",
+    "Combined fuel consumption and CO2 are nearly deterministic within fuel type, so measured consumption is excluded from the primary early-specification model.",
+    "No weight, horsepower, drivetrain, electrification flag, or lifecycle-emissions field is supplied.",
+    "Results are descriptive and predictive; they do not establish causal engineering effects or guaranteed emission reductions."
+  ],
+  "elapsed_seconds": 2.05
+}

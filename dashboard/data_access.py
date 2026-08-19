@@ -41,6 +41,7 @@ def load_segment_summary() -> pd.DataFrame:
             model_year,
             vehicle_class,
             make,
+            model,
             fuel_type,
             COUNT(*) AS vehicle_records,
             AVG(co2_emissions_g_km) AS average_co2_g_km,
@@ -48,7 +49,7 @@ def load_segment_summary() -> pd.DataFrame:
             AVG(engine_size_l) AS average_engine_size_l,
             AVG(co2_gap_to_class_p25) AS average_peer_gap_g_km
         FROM vw_dashboard_vehicle_detail
-        GROUP BY model_year, vehicle_class, make, fuel_type
+        GROUP BY model_year, vehicle_class, make, model, fuel_type
         """
     )
 
@@ -59,13 +60,15 @@ def load_engine_band_summary() -> pd.DataFrame:
         SELECT
             model_year,
             vehicle_class,
+            make,
+            model,
             fuel_type,
             engine_size_band,
             COUNT(*) AS vehicle_records,
             AVG(fuel_cons_comb_l_100km) AS average_combined_l_100km,
             AVG(co2_emissions_g_km) AS average_co2_g_km
         FROM vw_dashboard_vehicle_detail
-        GROUP BY model_year, vehicle_class, fuel_type, engine_size_band
+        GROUP BY model_year, vehicle_class, make, model, fuel_type, engine_size_band
         """
     )
 
@@ -98,7 +101,7 @@ def load_test_predictions() -> pd.DataFrame:
             model,
             vehicle_class,
             fuel_type,
-            actual_co2_g_km,
+            co2_emissions_g_km AS actual_co2_g_km,
             predicted_co2_g_km,
             prediction_error_g_km,
             absolute_error_g_km

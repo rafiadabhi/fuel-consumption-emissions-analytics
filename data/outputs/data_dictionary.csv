@@ -1,0 +1,35 @@
+field,data_type,definition,analytical_role
+vehicle_id,Integer,Deterministic surrogate key after duplicate removal,Identifier
+source_row_number,Integer,Original CSV row number including the header offset,Audit
+model_year,Integer,Vehicle model year,Feature / time split
+make,Text,Uppercase manufacturer name,Feature / segment
+model,Text,Uppercase vehicle model/configuration label,Reporting only
+vehicle_class_raw,Text,Vehicle class exactly as supplied,Audit
+vehicle_class,Category,Canonical vehicle class across historical naming changes,Feature / segment
+engine_size_l,Decimal,Engine displacement in litres,Feature
+cylinders,Integer,Number of engine cylinders,Feature
+transmission,Text,Original transmission code,Source field
+transmission_family_code,Category,"A, AS, AM, AV, or M code family",Database key / feature
+transmission_family,Category,Readable transmission family,Feature / segment
+gear_count,Integer,Number of gears; 0 means no discrete count for CVT,Feature
+fuel_type_code,Category,"X, Z, D, E, or N fuel code",Database key
+fuel_type,Category,Readable fuel type,Feature / segment
+fuel_cons_city_l_100km,Decimal,"Rated city fuel consumption, L/100 km",Measured outcome / analysis
+fuel_cons_hwy_l_100km,Decimal,"Rated highway fuel consumption, L/100 km",Measured outcome / analysis
+fuel_cons_comb_l_100km,Decimal,"Rated combined fuel consumption, L/100 km",Measured outcome / leakage-excluded
+fuel_economy_comb_mpg,Integer,"Rated combined fuel economy, miles per gallon",Derived source measure / leakage-excluded
+co2_emissions_g_km,Integer,Rated tailpipe CO2 emissions in grams per kilometre,Regression target
+co2_rating,Nullable integer,CO2 rating supplied from model year 2016 onward,Reporting only
+smog_rating,Nullable integer,Smog rating supplied from model year 2017 onward,Reporting only
+city_hwy_gap_l_100km,Decimal,City minus highway fuel consumption,Engineered analysis
+city_hwy_ratio,Decimal,City divided by highway fuel consumption,Engineered analysis
+co2_per_comb_l,Decimal,CO2 g/km divided by combined L/100 km,Diagnostic only
+engine_size_band,Category,Readable engine-displacement band,Dashboard segment
+class_year_co2_median,Decimal,Median CO2 for the same model year and class,Peer benchmark
+class_year_co2_p25,Decimal,25th percentile CO2 for the same model year and class,Peer benchmark
+co2_vs_class_year_median,Decimal,Vehicle CO2 minus class-year median,Peer benchmark
+co2_gap_to_class_p25,Decimal,Positive gap to class-year 25th percentile,Scenario input; not guaranteed reduction
+above_class_year_median,Binary,1 when CO2 exceeds the class-year median,Dashboard flag
+city_below_highway_flag,Binary,1 when rated city use is below highway use,Data-quality/technology flag
+emission_band,Category,Descriptive CO2 band; not a regulatory rating,Dashboard segment
+model_split,Category,"Train, validation, or test period",Evaluation

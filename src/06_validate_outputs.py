@@ -195,6 +195,17 @@ def main() -> None:
             "kpi_view": int(
                 connection.execute(text("SELECT COUNT(*) FROM vw_dashboard_kpis")).scalar_one()
             ),
+            "dashboard_prediction_sample": int(
+                connection.execute(
+                    text(
+                        "SELECT co2_emissions_g_km AS actual_co2_g_km, "
+                        "predicted_co2_g_km, absolute_error_g_km "
+                        "FROM vw_dashboard_vehicle_detail "
+                        "WHERE model_split = 'test' LIMIT 1"
+                    )
+                ).first()
+                is not None
+            ),
         }
     rows.extend(
         [
@@ -224,6 +235,12 @@ def main() -> None:
             ),
             check("MySQL yearly rows", mysql_summary["yearly_view"] == 29, mysql_summary["yearly_view"], 29),
             check("MySQL KPI rows", mysql_summary["kpi_view"] == 1, mysql_summary["kpi_view"], 1),
+            check(
+                "dashboard prediction query",
+                mysql_summary["dashboard_prediction_sample"] == 1,
+                mysql_summary["dashboard_prediction_sample"],
+                1,
+            ),
         ]
     )
 

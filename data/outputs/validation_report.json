@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks_run": 32,
+  "checks_passed": 32,
+  "checks_failed": 0,
+  "failed_checks": [],
+  "mysql_summary": {
+    "vehicle_ratings": 26998,
+    "model_predictions": 26998,
+    "model_segment_errors": 24,
+    "detail_view": 26998,
+    "yearly_view": 29,
+    "kpi_view": 1
+  },
+  "note": "Generated files, model reproduction, MySQL tables, and dashboard views were validated."
+}
